@@ -1,6 +1,6 @@
 package com.ranhiru.twitterstreamer
 
-class Main {
+class Producer {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
