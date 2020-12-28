@@ -68,6 +68,6 @@ class TweetsProducer: StatusListener {
     }
 
     companion object {
-        private const val TOPIC_NAME = "cryptocurrency_tweets"
+        private const val TOPIC_NAME = "tweets"
     }
 }
