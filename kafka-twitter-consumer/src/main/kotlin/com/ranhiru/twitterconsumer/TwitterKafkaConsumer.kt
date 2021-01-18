@@ -8,6 +8,12 @@ import org.slf4j.LoggerFactory
 import java.time.Duration
 import java.util.*
 
+inline fun measureTimeMillis(block: () -> Unit): Long {
+    val start = System.currentTimeMillis()
+    block()
+    return System.currentTimeMillis() - start
+}
+
 class TwitterKafkaConsumer(
     private val elasticSearchConsumer: ElasticSearchConsumer
 ) {
@@ -26,6 +32,9 @@ class TwitterKafkaConsumer(
         properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer::class.java.name)
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer::class.java.name)
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, consumerGroup)
+        properties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false")
+        properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "5000")
+        properties.setProperty(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, "10000000")
 
         consumer = KafkaConsumer<String, String>(properties)
         consumer.subscribe(listOf(topic))
@@ -34,16 +43,18 @@ class TwitterKafkaConsumer(
     fun run() {
         while (keepPolling) {
             val records = consumer.poll(Duration.ofMillis(1000))
+            logger.info("Received ${records.count()} records")
 
-            records.forEach { record ->
-                logger.info(
-                    """
-                    Inserting value in to ElasticSearch
-                    Value: ${record.value()}
-                    Topic: ${record.topic()}
-                    """.trimIndent()
-                )
-                elasticSearchConsumer.putDocument(record.value())
+            if (records.count() > 0) {
+                val executionTime = measureTimeMillis {
+                    val jsonRecords = records.map { record -> record.value() }
+                    elasticSearchConsumer.putJSONBulk(jsonRecords)
+
+                    consumer.commitSync()
+                }
+                logger.info("Took $executionTime to consume records")
+            } else {
+                logger.info("No records to consume")
             }
         }
     }
