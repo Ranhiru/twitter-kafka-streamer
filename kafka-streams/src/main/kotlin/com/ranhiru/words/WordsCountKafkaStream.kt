@@ -24,7 +24,8 @@ class WordsCountKafkaStream {
         val topic = "streams-plaintext-input"
         val wordsKafkaStream = streamsBuilder.stream<String, String>(topic)
 
-        wordsKafkaStream.flatMapValues { value -> value.toLowerCase().split(" ") }
+        wordsKafkaStream
+            .flatMapValues { value -> value.toLowerCase().split(" ") }
             .peek { _, value -> logger.info("Received value $value") }
             .groupBy { _, value -> value }
             .count()
@@ -58,7 +59,9 @@ class WordsCountKafkaStream {
 
         val username = System.getenv("SASL_LOGIN_USERNAME")
         val password = System.getenv("SASL_LOGIN_PASSWORD")
-        properties.setProperty(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "pkc-ldvj1.ap-southeast-2.aws.confluent.cloud:9092")
+        val bootStrapServers = System.getenv("BOOTSTRAP_SERVERS")
+
+        properties.setProperty(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootStrapServers)
         properties.setProperty(StreamsConfig.SECURITY_PROTOCOL_CONFIG, "SASL_SSL")
         properties.setProperty(StreamsConfig.REPLICATION_FACTOR_CONFIG, "3")
         properties.setProperty("sasl.jaas.config", "org.apache.kafka.common.security.plain.PlainLoginModule required username='$username' password='$password';")

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kafka-twitter-consumer.iml" filepath="$PROJECT_DIR$/.idea/modules/kafka-twitter-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kafka-confluent-streams.iml" filepath="$PROJECT_DIR$/.idea/modules/kafka-confluent-streams.iml" />
     </modules>
   </component>
 </project>
