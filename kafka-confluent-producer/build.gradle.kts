@@ -15,7 +15,6 @@ repositories {
 dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.apache.avro:avro:1.10.1")
-    implementation("org.apache.kafka:kafka-clients:2.6.0")
     implementation("org.apache.kafka:kafka-streams:2.7.0")
     implementation("org.slf4j:slf4j-simple:1.7.30")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.12.0")

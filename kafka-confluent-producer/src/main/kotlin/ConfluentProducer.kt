@@ -9,10 +9,13 @@ import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.serialization.StringSerializer
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import java.util.*
 
 class ConfluentProducer {
     private val producer: KafkaProducer<String, Payment>
+    private val logger: Logger = LoggerFactory.getLogger(this::class.java)
 
     init {
         val properties = getConfluentProperties()

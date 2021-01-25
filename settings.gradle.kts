@@ -19,4 +19,4 @@ pluginManagement {
 include("kafka-twitter-producer")
 include("kafka-twitter-consumer")
 include("kafka-streams")
-include("kafka-confluent-producer-streamer")
+include("kafka-confluent-producer")
