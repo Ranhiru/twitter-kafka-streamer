@@ -1,12 +1,15 @@
 package com.ranhiru.twitterstream
 
-class KafkaConfluentStreams {
+class KafkaConfluentProducerApp {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            SpecificAvroSerde
+
+            val confluentProducer = ConfluentProducer()
+            confluentProducer.run()
 
             Runtime.getRuntime().addShutdownHook(Thread {
+                confluentProducer.shutdown()
             })
         }
     }

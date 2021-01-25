@@ -11,7 +11,7 @@ import java.util.*
 
 class TweetsProducer: StatusListener {
     private val logger: Logger = LoggerFactory.getLogger(this::class.java)
-    private val producer: KafkaProducer<String, String>;
+    private val producer: KafkaProducer<String, String>
 
     init {
         logger.info("Starting App!")
