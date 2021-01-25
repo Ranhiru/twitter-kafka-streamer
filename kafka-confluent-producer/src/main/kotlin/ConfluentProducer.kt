@@ -19,11 +19,23 @@ class ConfluentProducer {
     }
 
     fun run()  {
-        val payment = Payment.newBuilder().setAmount(100.00)
-            .setId("1")
+        while(true) {
+            val payment = requestPaymentInfo()
+            val producerRecord = ProducerRecord("payments", payment.getId(), payment)
+            logger.info("Producing record $payment")
+            producer.send(producerRecord)
+        }
+    }
+
+    private fun requestPaymentInfo(): Payment {
+        println("Enter the payment id: ")
+        val id = readLine()
+        println("Enter the payment amount: ")
+        val amount = readLine()!!.toDouble()
+        return Payment.newBuilder()
+            .setId(id)
+            .setAmount(amount)
             .build()
-        val producerRecord = ProducerRecord<String, Payment>("payments", payment)
-        producer.send(producerRecord)
     }
 
     fun shutdown() {
