@@ -1,7 +1,8 @@
 package com.ranhiru.twitterstream
 
-import io.confluent.kafka.serializers.KafkaAvroSerializer
-import org.apache.kafka.common.serialization.StringSerializer
+import io.confluent.kafka.serializers.KafkaAvroDeserializer
+import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+import org.apache.kafka.common.serialization.StringDeserializer
 import org.apache.kafka.streams.KafkaStreams
 import org.apache.kafka.streams.StreamsBuilder
 import org.apache.kafka.streams.StreamsConfig
@@ -40,8 +41,8 @@ class ConfluentStreamer {
 
         // StreamsConfig Config
         properties.setProperty(StreamsConfig.APPLICATION_ID_CONFIG, "confluent-payment-stream")
-        properties.setProperty(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, StringSerializer::class.java.name)
-        properties.setProperty(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, KafkaAvroSerializer::class.java.name)
+        properties.setProperty(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, SpecificAvroSerde::class.java.name)
+        properties.setProperty(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, SpecificAvroSerde::class.java.name)
         properties.setProperty(StreamsConfig.REPLICATION_FACTOR_CONFIG, "3")
 
         properties.putAll(Config.getBoostrapServerConfig())

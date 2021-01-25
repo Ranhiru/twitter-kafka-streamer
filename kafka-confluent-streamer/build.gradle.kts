@@ -12,11 +12,11 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":schemas"))
     implementation(kotlin("stdlib"))
-    implementation("org.apache.kafka:kafka-clients:2.7.0")
+    implementation(project(":schemas"))
+    implementation("org.apache.kafka:kafka-streams:6.0.1-ccs")
+    implementation("org.apache.kafka:kafka-clients:6.0.1-ccs")
     implementation("org.slf4j:slf4j-simple:1.7.30")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.12.0")
-    implementation("io.confluent", "kafka-avro-serializer", "5.3.0")
+    implementation("io.confluent", "kafka-streams-avro-serde", "6.0.1")
     testImplementation("junit", "junit", "4.12")
 }
