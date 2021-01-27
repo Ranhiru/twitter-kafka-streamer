@@ -9,7 +9,7 @@ Additionally, this project uses an Apache avro schema (schemas/src/main/avro/Pay
 * Confluent Cloud account and cluster (https://confluent.cloud/signup)
 * New topic named `payments`
 * New API access credentials (Key and Secret) for Confluent Cloud - https://docs.confluent.io/cloud/current/client-apps/api-keys.html
-* Setup Read & Write ACL permissions to the `payments` topic to the generated API access crentials
+* Setup Read & Write ACL permissions to the `payments` topic to the generated API access credentials
 * Setup Schema Registry API Access - https://docs.confluent.io/cloud/current/client-apps/api-keys.html
 
 #### How to Run

@@ -45,15 +45,6 @@ class WordsCountKafkaStream {
         kafkaStreams.start()
     }
 
-    private fun getProperties(): Properties {
-        val properties = Properties()
-        properties.setProperty(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092")
-        properties.setProperty(StreamsConfig.APPLICATION_ID_CONFIG, "kafka-words-stream")
-        properties.setProperty(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde::class.java.name)
-        properties.setProperty(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.StringSerde::class.java.name)
-        return properties
-    }
-
     private fun getConfluentProperties(): Properties {
         val properties = Properties()
 
