@@ -1,6 +1,6 @@
 package com.ranhiru.twitterstream
 
-class Stream {
+class ImportantTweetsApp {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
