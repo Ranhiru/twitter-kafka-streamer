@@ -21,7 +21,7 @@ class ConfluentProducer {
     fun run()  {
         while(true) {
             val payment = requestPaymentInfo()
-            val producerRecord = ProducerRecord("payments", payment.getId(), payment)
+            val producerRecord = ProducerRecord(TOPIC_NAME, payment.getId(), payment)
             logger.info("Producing record $payment")
             producer.send(producerRecord)
         }
@@ -60,5 +60,9 @@ class ConfluentProducer {
         properties.putAll(Config.getSchemaRegistryConfig())
 
         return properties
+    }
+
+    companion object {
+        const val TOPIC_NAME = "payments"
     }
 }
